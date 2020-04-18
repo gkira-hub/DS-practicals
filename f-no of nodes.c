@@ -1,55 +1,55 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-int x=0,space=0,leaf=0;
+int x=0,s=0,l=0;
 
 struct node
 {
     int data;
     struct node *left;
     struct node *right;
-};
+}*Node;
 
-struct node *create()
+//  creation of tree
+int create()
 {
-    int x;
-    struct node *new;
-    new = (struct node*)malloc(sizeof(struct node));
-    printf ("\n Enter the data for node(Enter -1 for no Data Entry)\n");
-    scanf ("%d",&x);
-    if(x==-1)
-    {
-        printf("\n You have not entered any data");
-        return NULL;
-    }
-
-    new->data=x;
-    printf ("\n Enter the data for left node of %d",new->data);
-    new->left=create();
-    printf ("\n Enter the data for the right node of %d",new->data);
-    new->right=create();
-    return new;
+     int x;
+     Node=(struct node*)malloc(sizeof(struct node));
+     struct node* p=(struct node*)malloc(sizeof(struct node));
+     printf("Enter the data for the nodes(-1 for no data)");
+     scanf("%d", &x);
+        if(x==-1)
+           {
+             return NULL;
+           }
+      p->data=x;
+      printf("Enter the left child data rooted at %d \n",p->data);
+      p->left=create();
+      printf("Enter the right child data rooted at %d\n",p->data);
+      p->right=create();
+      return p;
 }
 
-int nn(struct node *temp)
+
+int no_of_nodes(struct node *new)
 {
-    int x,y;
-    if(temp->left)
+    int a,b;
+    if(new->left)
     {
-        x=nn(temp->left);
+        a=no_of_nodes(new->left);
     }
-    if(temp->right)
+    if(new->right)
     {
-        y=nn(temp->right);
+        b=no_of_nodes(new->right);
     }
-    if(temp->left == NULL & temp->right == NULL)
+    if(new->left == NULL & new->right == NULL)
     {
-        leaf++;
+        l++;
         return 1;
     }
     else
     {
-        return 1+x+y;
+        return 1+a+b;
     }
 }
 
@@ -57,9 +57,6 @@ int main()
 {
     struct node *root;
     root=create();
-    printf ("\n Root node = %d",root->data);
-    traverse(root);
-    printf ("\n");
-    int n=nn(root);
+    int n=no_of_nodes(root);
     printf("\n No.of Nodes=%d",n);
  }
